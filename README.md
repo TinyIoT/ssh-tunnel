@@ -1,2 +1,2 @@
-# docker-ssh-tunneler
-Dockerized openssh server for port forwarding over SSH
+# docker-ssh-tunnel
+Dockerized OpenSSH server for port forwarding over SSH
