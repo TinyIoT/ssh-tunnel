@@ -7,16 +7,14 @@ RUN apt update && \
 RUN mkdir /var/run/sshd
 
 RUN useradd -ms /bin/bash limited
+ENV AUTHORIZED_KEYS=/home/limited/.ssh/authorized_keys
 
-COPY LICENSE .
+WORKDIR /home
+COPY . /home
 
-COPY sshd_config.append .
 RUN cat sshd_config.append >> /etc/ssh/sshd_config 
-
 
 VOLUME /home/limited/.ssh
 EXPOSE 8022
 
-# -d run in attached mode
-# -e log everything to stderr
-ENTRYPOINT ["/usr/sbin/sshd", "-D", "-e"]
+ENTRYPOINT ["/home/run.sh"]
