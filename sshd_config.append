@@ -1,0 +1,7 @@
+# The following are appended to /etc/ssh/sshd_config
+Port 8022
+GatewayPorts yes
+AllowAgentForwarding no
+ForceCommand echo 'Not Allowed.'
+ClientAliveInterval 100
+ClientAliveCountMax 3

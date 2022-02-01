@@ -1,4 +1,4 @@
-FROM debian:stable-slim
+FROM ubuntu:20.04
 
 RUN apt update && \
     apt -y install openssh-server
@@ -7,7 +7,16 @@ RUN apt update && \
 RUN mkdir /var/run/sshd
 
 RUN useradd -ms /bin/bash limited
-VOLUME /home/limited/.ssh
-EXPOSE 22
 
-ENTRYPOINT ["/usr/sbin/sshd"]
+COPY LICENSE .
+
+COPY sshd_config.append .
+RUN cat sshd_config.append >> /etc/ssh/sshd_config 
+
+
+VOLUME /home/limited/.ssh
+EXPOSE 8022
+
+# -d run in attached mode
+# -e log everything to stderr
+ENTRYPOINT ["/usr/sbin/sshd", "-D", "-e"]
