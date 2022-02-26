@@ -1,0 +1,50 @@
+name: ssh-tunnel-client
+base: core20 
+
+version: git
+
+summary: Client to start an SSH tunnel 
+description: |
+  This snap starts an SSH tunnel by running the ssh command as a service.
+
+  Copy your SSH key(s) to the root user, e.g.:  
+  `sudo cp .ssh/id_ed25519* /root/.ssh/1
+
+  Connect ssh-keys interface to access keys and ssh command:  
+  `sudo snap connect ssh-tunnel-client:ssh-keys :ssh-keys`
+
+  Set destination:  
+  `snap set ssh-tunnel-client destination="user@example.com"`
+
+  Set destination ssh server port:  
+  `sudo snap set ssh-tunnel-client port="8022"`
+
+  Set args:  
+  `snap set ssh-tunnel-client args="-R :9901:localhost:22"`
+
+grade: devel
+confinement: strict
+
+architectures:
+  - build-on: amd64
+  - build-on: arm64
+  - build-on: armhf
+
+apps:
+  client:
+    command: client.sh
+    daemon: simple
+    restart-delay: 10s
+    install-mode: disable
+    plugs: 
+      - network
+      - ssh-keys
+
+parts:
+  openssh-client:
+    plugin: dump
+    source: snap/local
+    stage-packages:
+      - openssh-client
+    stage:
+      - client.sh

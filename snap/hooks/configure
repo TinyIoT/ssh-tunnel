@@ -1,0 +1,4 @@
+#!/bin/bash
+
+# restart to apply new config options
+snapctl restart ssh-tunnel-client
