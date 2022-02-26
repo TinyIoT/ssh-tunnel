@@ -8,19 +8,22 @@ description: |
   This snap starts an SSH tunnel by running the ssh command as a service.
 
   Copy your SSH key(s) to the root user, e.g.:  
-  `sudo cp .ssh/id_ed25519* /root/.ssh/1
+  `sudo cp .ssh/id_ed25519* /root/.ssh/`
 
   Connect ssh-keys interface to access keys and ssh command:  
   `sudo snap connect ssh-tunnel-client:ssh-keys :ssh-keys`
 
   Set destination:  
-  `snap set ssh-tunnel-client destination="user@example.com"`
+  `sudo snap set ssh-tunnel-client destination="user@example.com"`
 
   Set destination ssh server port:  
   `sudo snap set ssh-tunnel-client port="8022"`
 
   Set args:  
   `snap set ssh-tunnel-client args="-R :9901:localhost:22"`
+
+  Start and enable:  
+  `sudo snap start --enable ssh-tunnel-client `
 
 grade: devel
 confinement: strict
