@@ -1,9 +1,12 @@
-# docker-ssh-tunnel
-Dockerized OpenSSH server for port forwarding over SSH. 
+# ssh-tunnel
+This project includes the following:
+- Dockerized OpenSSH server configured and limited for port forwarding over SSH.
+- Snapped OpenSSH client for connecting to an SSH server and persistently forwarding the ports.
 
 The Dockerfile is available [here](https://github.com/farshidtz/docker-ssh-tunnel/blob/master/Dockerfile).
 
-## Run
+## Server
+### Run
 One or more public keys can be passed as environment variables with
 `PUBLIC_KEY_` prefix. E.g.:
 
@@ -37,7 +40,13 @@ where
 docker logs --timestamps -f tunnel
 ```
 
-## Open a tunnel (using autossh)
+## Client
+### Snap
+The snap allows easy installation and configuration of an SSH client for port forwarding.
+
+For installation and configuration instructions refer to: https://snapcraft.io/ssh-tunnel-client
+
+### AutoSSH
 ```
 autossh -TNn -f -R :$9901:localhost:22 -p 8022 limited@example.com
 ```
