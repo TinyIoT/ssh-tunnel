@@ -6,26 +6,39 @@ version: git
 summary: Client to start an SSH tunnel 
 description: |
   This snap starts an SSH tunnel by running the ssh command as a service.
+  
+  The service is disabled by default.
+  Configure and then start the client as described below:
 
   Copy your SSH key(s) to the root user, e.g.:  
   `sudo cp .ssh/id_ed25519* /root/.ssh/`
 
-  Connect ssh-keys interface to access keys and ssh command:  
+  Connect the ssh-keys interface to access keys and the ssh command:  
   `sudo snap connect ssh-tunnel-client:ssh-keys :ssh-keys`
 
-  Set destination:  
+  Set the destination:  
   `sudo snap set ssh-tunnel-client destination="user@example.com"`
 
-  Set destination ssh server port:  
+  Set the destination ssh server port:  
   `sudo snap set ssh-tunnel-client port="8022"`
 
-  Set args:  
-  `snap set ssh-tunnel-client args="-R :9901:localhost:22"`
+  Pass arguments to the client:  
+  `sudo snap set ssh-tunnel-client args="-R 9901:localhost:22"`  
+  The above example is for TCP remote forwarding; listening on port 9901 on the
+  remote server, to tunnel traffic to the client on port 22, on the localhost.  
+  For more details, refer to the OpenSSH client manual:
+  https://man7.org/linux/man-pages/man1/ssh.1.html
 
-  Start and enable:  
-  `sudo snap start --enable ssh-tunnel-client `
+  Start and enable the service:  
+  `sudo snap start --enable ssh-tunnel-client`
 
-grade: devel
+  Check the logs:  
+  `sudo snap logs -f ssh-tunnel-client`
+
+  Found issues or need help? Go to:  
+  https://github.com/TinyIoT/ssh-tunnel/issues
+
+grade: stable
 confinement: strict
 
 architectures:
